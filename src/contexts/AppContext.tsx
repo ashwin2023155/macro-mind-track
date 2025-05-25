@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { UserProfile, DayStats, Meal, FoodItem } from '../types';
 import { calculateMaintenance, calculateMacros } from '../utils/calculations';
@@ -61,8 +60,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [today]);
 
   const setUserProfile = (profile: UserProfile) => {
+    console.log('Setting user profile with measurements:', {
+      height: profile.height,
+      weight: profile.weight,
+      waist: profile.waist,
+      hip: profile.hip,
+      neck: profile.neck,
+      gender: profile.gender
+    });
+    
     const targetCalories = calculateMaintenance(profile);
     const macros = calculateMacros(targetCalories);
+    
+    console.log('Calculated maintenance calories:', targetCalories);
+    console.log('Calculated macros:', macros);
     
     const completeProfile = {
       ...profile,

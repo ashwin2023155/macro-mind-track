@@ -1,16 +1,14 @@
-
 import { UserProfile, FoodItem } from '../types';
 
 export const calculateMaintenance = (profile: UserProfile): number => {
-  // Using Katch-McArdle formula which is more accurate when body composition is known
-  // First calculate body fat percentage using waist-to-hip ratio and other measurements
-  const bodyFatPercentage = calculateBodyFatPercentage(profile);
+  // Using U.S. Navy Method for body fat percentage calculation
+  const bodyFatPercentage = calculateBodyFatPercentageNavyMethod(profile);
   const leanBodyMass = profile.weight * (1 - bodyFatPercentage / 100);
   
-  // Katch-McArdle formula: BMR = 370 + (21.6 × lean body mass in kg)
+  // BMR = 370 + (21.6 × LBM)
   const bmr = 370 + (21.6 * leanBodyMass);
 
-  // Activity multipliers (more precise)
+  // Activity multipliers
   const activityMultipliers = {
     'sedentary': 1.2,
     'light': 1.375,
@@ -32,24 +30,17 @@ export const calculateMaintenance = (profile: UserProfile): number => {
   }
 };
 
-const calculateBodyFatPercentage = (profile: UserProfile): number => {
-  const { weight, height, waist, hip, gender, age } = profile;
+const calculateBodyFatPercentageNavyMethod = (profile: UserProfile): number => {
+  const { weight, height, waist, hip, neck, gender } = profile;
   
   if (gender === 'male') {
-    // Navy method for men: uses waist and neck (we'll use hip as approximation)
-    // BF% = 495 / (1.0324 - 0.19077 * log10(waist - neck) + 0.15456 * log10(height)) - 450
-    const waistToHeightRatio = waist / height;
-    const bmi = weight / ((height / 100) ** 2);
-    
-    // Simplified formula incorporating waist measurement
-    return Math.max(8, Math.min(35, 1.2 * bmi + 0.23 * age - 16.2 + (waistToHeightRatio * 100 - 50) * 0.5));
+    // For men: Body Fat % = 86.010 × log10(waist - neck) - 70.041 × log10(height) + 36.76
+    const bodyFatPercentage = 86.010 * Math.log10(waist - neck) - 70.041 * Math.log10(height) + 36.76;
+    return Math.max(3, Math.min(50, bodyFatPercentage)); // Clamp between reasonable values
   } else {
-    // For women, using waist-to-hip ratio
-    const waistToHipRatio = waist / hip;
-    const bmi = weight / ((height / 100) ** 2);
-    
-    // Enhanced formula for women
-    return Math.max(12, Math.min(45, 1.2 * bmi + 0.23 * age - 5.4 + (waistToHipRatio - 0.7) * 100 * 0.3));
+    // For women: Body Fat % = 163.205 × log10(waist + hip - neck) - 97.684 × log10(height) - 78.387
+    const bodyFatPercentage = 163.205 * Math.log10(waist + hip - neck) - 97.684 * Math.log10(height) - 78.387;
+    return Math.max(10, Math.min(60, bodyFatPercentage)); // Clamp between reasonable values
   }
 };
 

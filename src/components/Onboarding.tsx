@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,6 +19,7 @@ export const Onboarding: React.FC = () => {
     height: 170,
     waist: 80,
     hip: 95,
+    neck: 35,
     gender: 'male',
     activityLevel: 'moderate',
     goal: 'maintain'
@@ -41,6 +41,7 @@ export const Onboarding: React.FC = () => {
         height: formData.height || 170,
         waist: formData.waist || 80,
         hip: formData.hip || 95,
+        neck: formData.neck || 35,
         gender: formData.gender || 'male',
         activityLevel: formData.activityLevel || 'moderate',
         goal: formData.goal || 'maintain',
@@ -160,22 +161,34 @@ export const Onboarding: React.FC = () => {
                     type="number"
                     value={formData.waist}
                     onChange={(e) => handleInputChange('waist', parseFloat(e.target.value))}
-                    placeholder="Measure at narrowest point"
+                    placeholder="At narrowest point"
                     className="bg-slate-700 border-slate-600 text-white"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="hip" className="text-white">Hip (cm)</Label>
+                  <Label htmlFor="neck" className="text-white">Neck (cm)</Label>
                   <Input
-                    id="hip"
+                    id="neck"
                     type="number"
-                    value={formData.hip}
-                    onChange={(e) => handleInputChange('hip', parseFloat(e.target.value))}
-                    placeholder="Measure at widest point"
+                    value={formData.neck}
+                    onChange={(e) => handleInputChange('neck', parseFloat(e.target.value))}
+                    placeholder="Around neck"
                     className="bg-slate-700 border-slate-600 text-white"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="hip" className="text-white">Hip (cm)</Label>
+                <Input
+                  id="hip"
+                  type="number"
+                  value={formData.hip}
+                  onChange={(e) => handleInputChange('hip', parseFloat(e.target.value))}
+                  placeholder="At widest point"
+                  className="bg-slate-700 border-slate-600 text-white"
+                />
               </div>
             </div>
           )}
