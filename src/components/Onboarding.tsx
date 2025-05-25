@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useApp } from '../contexts/AppContext';
 import { UserProfile } from '../types';
-import { Activity, Target, User } from 'lucide-react';
+import { Activity, Target, User, Ruler } from 'lucide-react';
 
 export const Onboarding: React.FC = () => {
   const { setUserProfile } = useApp();
@@ -18,6 +18,8 @@ export const Onboarding: React.FC = () => {
     age: 25,
     weight: 70,
     height: 170,
+    waist: 80,
+    hip: 95,
     gender: 'male',
     activityLevel: 'moderate',
     goal: 'maintain'
@@ -28,7 +30,7 @@ export const Onboarding: React.FC = () => {
   };
 
   const handleNext = () => {
-    if (step < 3) {
+    if (step < 4) {
       setStep(step + 1);
     } else {
       const profile: UserProfile = {
@@ -37,6 +39,8 @@ export const Onboarding: React.FC = () => {
         age: formData.age || 25,
         weight: formData.weight || 70,
         height: formData.height || 170,
+        waist: formData.waist || 80,
+        hip: formData.hip || 95,
         gender: formData.gender || 'male',
         activityLevel: formData.activityLevel || 'moderate',
         goal: formData.goal || 'maintain',
@@ -63,7 +67,7 @@ export const Onboarding: React.FC = () => {
             <Activity className="h-8 w-8 text-fittrack-400" />
             FitTrackAI
           </CardTitle>
-          <p className="text-slate-400">Step {step} of 3</p>
+          <p className="text-slate-400">Step {step} of 4</p>
         </CardHeader>
         <CardContent className="space-y-6">
           {step === 1 && (
@@ -114,6 +118,15 @@ export const Onboarding: React.FC = () => {
                   </RadioGroup>
                 </div>
               </div>
+            </div>
+          )}
+
+          {step === 2 && (
+            <div className="space-y-4 animate-fade-in">
+              <div className="flex items-center gap-2 text-white mb-4">
+                <Ruler className="h-5 w-5 text-fittrack-400" />
+                <h3 className="text-lg font-semibold">Body Measurements</h3>
+              </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
@@ -138,10 +151,36 @@ export const Onboarding: React.FC = () => {
                   />
                 </div>
               </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="waist" className="text-white">Waist (cm)</Label>
+                  <Input
+                    id="waist"
+                    type="number"
+                    value={formData.waist}
+                    onChange={(e) => handleInputChange('waist', parseFloat(e.target.value))}
+                    placeholder="Measure at narrowest point"
+                    className="bg-slate-700 border-slate-600 text-white"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="hip" className="text-white">Hip (cm)</Label>
+                  <Input
+                    id="hip"
+                    type="number"
+                    value={formData.hip}
+                    onChange={(e) => handleInputChange('hip', parseFloat(e.target.value))}
+                    placeholder="Measure at widest point"
+                    className="bg-slate-700 border-slate-600 text-white"
+                  />
+                </div>
+              </div>
             </div>
           )}
 
-          {step === 2 && (
+          {step === 3 && (
             <div className="space-y-4 animate-fade-in">
               <div className="flex items-center gap-2 text-white mb-4">
                 <Activity className="h-5 w-5 text-fittrack-400" />
@@ -169,7 +208,7 @@ export const Onboarding: React.FC = () => {
             </div>
           )}
 
-          {step === 3 && (
+          {step === 4 && (
             <div className="space-y-4 animate-fade-in">
               <div className="flex items-center gap-2 text-white mb-4">
                 <Target className="h-5 w-5 text-fittrack-400" />
@@ -229,7 +268,7 @@ export const Onboarding: React.FC = () => {
               onClick={handleNext}
               className="flex-1 bg-fittrack-600 hover:bg-fittrack-700 text-white"
             >
-              {step === 3 ? 'Complete Setup' : 'Next'}
+              {step === 4 ? 'Complete Setup' : 'Next'}
             </Button>
           </div>
         </CardContent>

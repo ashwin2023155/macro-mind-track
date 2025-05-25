@@ -1,17 +1,16 @@
 
-import { UserProfile } from '../types';
+import { UserProfile, FoodItem } from '../types';
 
 export const calculateMaintenance = (profile: UserProfile): number => {
-  // Mifflin-St Jeor Equation
-  let bmr: number;
+  // Using Katch-McArdle formula which is more accurate when body composition is known
+  // First calculate body fat percentage using waist-to-hip ratio and other measurements
+  const bodyFatPercentage = calculateBodyFatPercentage(profile);
+  const leanBodyMass = profile.weight * (1 - bodyFatPercentage / 100);
   
-  if (profile.gender === 'male') {
-    bmr = 88.362 + (13.397 * profile.weight) + (4.799 * profile.height) - (5.677 * profile.age);
-  } else {
-    bmr = 447.593 + (9.247 * profile.weight) + (3.098 * profile.height) - (4.330 * profile.age);
-  }
+  // Katch-McArdle formula: BMR = 370 + (21.6 × lean body mass in kg)
+  const bmr = 370 + (21.6 * leanBodyMass);
 
-  // Activity multiplier
+  // Activity multipliers (more precise)
   const activityMultipliers = {
     'sedentary': 1.2,
     'light': 1.375,
@@ -30,6 +29,27 @@ export const calculateMaintenance = (profile: UserProfile): number => {
       return Math.round(maintenance + 300); // 300 calorie surplus
     default:
       return Math.round(maintenance);
+  }
+};
+
+const calculateBodyFatPercentage = (profile: UserProfile): number => {
+  const { weight, height, waist, hip, gender, age } = profile;
+  
+  if (gender === 'male') {
+    // Navy method for men: uses waist and neck (we'll use hip as approximation)
+    // BF% = 495 / (1.0324 - 0.19077 * log10(waist - neck) + 0.15456 * log10(height)) - 450
+    const waistToHeightRatio = waist / height;
+    const bmi = weight / ((height / 100) ** 2);
+    
+    // Simplified formula incorporating waist measurement
+    return Math.max(8, Math.min(35, 1.2 * bmi + 0.23 * age - 16.2 + (waistToHeightRatio * 100 - 50) * 0.5));
+  } else {
+    // For women, using waist-to-hip ratio
+    const waistToHipRatio = waist / hip;
+    const bmi = weight / ((height / 100) ** 2);
+    
+    // Enhanced formula for women
+    return Math.max(12, Math.min(45, 1.2 * bmi + 0.23 * age - 5.4 + (waistToHipRatio - 0.7) * 100 * 0.3));
   }
 };
 

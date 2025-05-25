@@ -5,6 +5,8 @@ export interface UserProfile {
   age: number;
   weight: number;
   height: number;
+  waist: number;
+  hip: number;
   gender: 'male' | 'female';
   activityLevel: 'sedentary' | 'light' | 'moderate' | 'active' | 'very-active';
   goal: 'lose' | 'maintain' | 'gain';
