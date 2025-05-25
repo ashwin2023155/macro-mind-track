@@ -25,6 +25,12 @@ export const calculateMaintenance = (profile: UserProfile): number => {
       return Math.round(maintenance - 500); // 500 calorie deficit
     case 'gain':
       return Math.round(maintenance + 300); // 300 calorie surplus
+    case 'recomposition':
+      return Math.round(maintenance - 200); // Small deficit for body recomposition
+    case 'performance':
+      return Math.round(maintenance + 100); // Slight surplus for performance
+    case 'healthy':
+      return Math.round(maintenance); // Maintenance for healthy eating focus
     default:
       return Math.round(maintenance);
   }
@@ -44,11 +50,43 @@ const calculateBodyFatPercentageNavyMethod = (profile: UserProfile): number => {
   }
 };
 
-export const calculateMacros = (targetCalories: number) => {
-  // Standard macro distribution: 30% protein, 40% carbs, 30% fats
-  const protein = Math.round((targetCalories * 0.30) / 4); // 4 calories per gram
-  const carbs = Math.round((targetCalories * 0.40) / 4);   // 4 calories per gram
-  const fats = Math.round((targetCalories * 0.30) / 9);    // 9 calories per gram
+export const calculateMacros = (targetCalories: number, goal: UserProfile['goal']) => {
+  let protein: number, carbs: number, fats: number;
+  
+  switch (goal) {
+    case 'lose':
+      // Higher protein for muscle preservation during weight loss
+      protein = Math.round((targetCalories * 0.35) / 4); // 35% protein
+      carbs = Math.round((targetCalories * 0.35) / 4);   // 35% carbs
+      fats = Math.round((targetCalories * 0.30) / 9);    // 30% fats
+      break;
+    case 'gain':
+      // Balanced macros with emphasis on carbs for energy
+      protein = Math.round((targetCalories * 0.25) / 4); // 25% protein
+      carbs = Math.round((targetCalories * 0.50) / 4);   // 50% carbs
+      fats = Math.round((targetCalories * 0.25) / 9);    // 25% fats
+      break;
+    case 'recomposition':
+      // High protein for body recomposition
+      protein = Math.round((targetCalories * 0.40) / 4); // 40% protein
+      carbs = Math.round((targetCalories * 0.35) / 4);   // 35% carbs
+      fats = Math.round((targetCalories * 0.25) / 9);    // 25% fats
+      break;
+    case 'performance':
+      // Carb-focused for athletic performance
+      protein = Math.round((targetCalories * 0.25) / 4); // 25% protein
+      carbs = Math.round((targetCalories * 0.55) / 4);   // 55% carbs
+      fats = Math.round((targetCalories * 0.20) / 9);    // 20% fats
+      break;
+    case 'healthy':
+    case 'maintain':
+    default:
+      // Balanced macro distribution
+      protein = Math.round((targetCalories * 0.30) / 4); // 30% protein
+      carbs = Math.round((targetCalories * 0.40) / 4);   // 40% carbs
+      fats = Math.round((targetCalories * 0.30) / 9);    // 30% fats
+      break;
+  }
   
   return { protein, carbs, fats };
 };

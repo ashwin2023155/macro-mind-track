@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -239,17 +240,10 @@ export const Onboarding: React.FC = () => {
                     <RadioGroupItem value="lose" id="lose" />
                     <Label htmlFor="lose" className="text-white cursor-pointer">
                       <div>
-                        <div className="font-semibold">Weight Loss</div>
-                        <div className="text-sm text-slate-400">Lose weight with a calorie deficit</div>
-                      </div>
-                    </Label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-3 rounded-lg bg-slate-700">
-                    <RadioGroupItem value="maintain" id="maintain" />
-                    <Label htmlFor="maintain" className="text-white cursor-pointer">
-                      <div>
-                        <div className="font-semibold">Maintain Weight</div>
-                        <div className="text-sm text-slate-400">Maintain current weight</div>
+                        <div className="font-semibold flex items-center gap-2">
+                          🔻 Lose Weight
+                        </div>
+                        <div className="text-sm text-slate-400">Burn fat with a calorie deficit and stay lean</div>
                       </div>
                     </Label>
                   </div>
@@ -257,8 +251,54 @@ export const Onboarding: React.FC = () => {
                     <RadioGroupItem value="gain" id="gain" />
                     <Label htmlFor="gain" className="text-white cursor-pointer">
                       <div>
-                        <div className="font-semibold">Weight Gain</div>
-                        <div className="text-sm text-slate-400">Gain weight with a calorie surplus</div>
+                        <div className="font-semibold flex items-center gap-2">
+                          📈 Gain Weight (Build Muscle)
+                        </div>
+                        <div className="text-sm text-slate-400">Bulk up healthily with a calorie surplus and strength training focus</div>
+                      </div>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 p-3 rounded-lg bg-slate-700">
+                    <RadioGroupItem value="maintain" id="maintain" />
+                    <Label htmlFor="maintain" className="text-white cursor-pointer">
+                      <div>
+                        <div className="font-semibold flex items-center gap-2">
+                          ⚖️ Maintain Weight
+                        </div>
+                        <div className="text-sm text-slate-400">Stay at your current weight while eating balanced and healthy</div>
+                      </div>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 p-3 rounded-lg bg-slate-700">
+                    <RadioGroupItem value="recomposition" id="recomposition" />
+                    <Label htmlFor="recomposition" className="text-white cursor-pointer">
+                      <div>
+                        <div className="font-semibold flex items-center gap-2">
+                          🧘 Body Recomposition
+                        </div>
+                        <div className="text-sm text-slate-400">Lose fat and build muscle at the same time</div>
+                      </div>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 p-3 rounded-lg bg-slate-700">
+                    <RadioGroupItem value="performance" id="performance" />
+                    <Label htmlFor="performance" className="text-white cursor-pointer">
+                      <div>
+                        <div className="font-semibold flex items-center gap-2">
+                          🏃 Improve Fitness & Performance
+                        </div>
+                        <div className="text-sm text-slate-400">Increase stamina, strength, or athletic ability through nutrition</div>
+                      </div>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 p-3 rounded-lg bg-slate-700">
+                    <RadioGroupItem value="healthy" id="healthy" />
+                    <Label htmlFor="healthy" className="text-white cursor-pointer">
+                      <div>
+                        <div className="font-semibold flex items-center gap-2">
+                          🥗 Eat Healthier
+                        </div>
+                        <div className="text-sm text-slate-400">Focus on better food choices, balanced meals, and long-term habits</div>
                       </div>
                     </Label>
                   </div>

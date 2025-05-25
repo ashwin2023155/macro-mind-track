@@ -10,7 +10,7 @@ export interface UserProfile {
   neck: number;
   gender: 'male' | 'female';
   activityLevel: 'sedentary' | 'light' | 'moderate' | 'active' | 'very-active';
-  goal: 'lose' | 'maintain' | 'gain';
+  goal: 'lose' | 'maintain' | 'gain' | 'recomposition' | 'performance' | 'healthy';
   targetCalories: number;
   targetProtein: number;
   targetCarbs: number;

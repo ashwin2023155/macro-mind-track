@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { UserProfile, DayStats, Meal, FoodItem } from '../types';
 import { calculateMaintenance, calculateMacros } from '../utils/calculations';
@@ -70,7 +71,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
     
     const targetCalories = calculateMaintenance(profile);
-    const macros = calculateMacros(targetCalories);
+    const macros = calculateMacros(targetCalories, profile.goal);
     
     console.log('Calculated maintenance calories:', targetCalories);
     console.log('Calculated macros:', macros);
