@@ -1,13 +1,26 @@
-// Update this page (the content is just a fallback if you fail to update the page)
 
-const Index = () => {
+import React from 'react';
+import { AppProvider, useApp } from '../contexts/AppContext';
+import { Onboarding } from '../components/Onboarding';
+import { Dashboard } from '../components/Dashboard';
+import { AIChat } from '../components/AIChat';
+
+const AppContent: React.FC = () => {
+  const { isOnboarded } = useApp();
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="dark">
+      {!isOnboarded ? <Onboarding /> : <Dashboard />}
+      {isOnboarded && <AIChat />}
     </div>
+  );
+};
+
+const Index: React.FC = () => {
+  return (
+    <AppProvider>
+      <AppContent />
+    </AppProvider>
   );
 };
 
